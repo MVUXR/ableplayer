@@ -29,23 +29,48 @@
 </head>
 
 <body>
-
-<h1>Able Player for YouTube (Simple Example)</h1>
-
-<p>This page features a relatively <strong>simple</strong> example of Able Player being used to play a YouTube video. Its features include:</p>
-
-<ul>
-  <li>A described and non-described version of the video, both hosted on YouTube. Swap between the two versions using the <em>Description</em> button.</li>
-  <li>Captions, subtitles, and a poster image, all hosted on YouTube.</li>
-  <li>An interactive transcript built from the caption and subtitle files.</li>
-</ul>
-
-<p>For additional demos see the <a href="index.html">Index of <em>Able Player</em> Examples</a>. In particular, check out the <a href="youtube2.html">Complex YouTube Example</a>.</p>
-
+ <h1 id="youtube-support">YouTube Support</h1>
 <div class="wrapper">
   <video id="video1" data-able-player data-skin="2020" preload="auto" data-youtube-id="7qySSDrgN_4">
   </video>
 </div>
+
+<p>To play a YouTube video in <em>Able Player</em>, simply include a <strong>data-youtube-id</strong> attribute
+on the <code class="language-plaintext highlighter-rouge">&lt;video&gt;</code> element. The value of this attribute must be the video’s 11-character YouTube ID.</p>
+
+<p>If a described version of the video is available on YouTube, include a <strong>data-youtube-desc-id</strong> attribute
+on the <code class="language-plaintext highlighter-rouge">&lt;video&gt;</code> element. The value of this attribute must be the 11-character YouTube ID
+of the described version. If users turn on the Description button on their player controller,
+the described version of the video will be loaded instead of the non-described version.</p>
+
+<p>Versions 2.3.1 through 3.2.12 required a YouTube Data API key for retrieving caption data from YouTube.
+Get a YouTube Data API key by registering your application at the <a href="https://console.developers.google.com/">Google Developer Console</a>.
+For complete instructions, see <a href="https://developers.google.com/api-client-library/javascript/start/start-js#Getkeysforyourapplication">Google’s Getting Started page</a>. Note: All that’s needed for
+playing YouTube videos in Able Player is a simple API key, <strong>not</strong> OAuth 2.0.</p>
+
+<p>After obtaining your YouTube Data API Key, insert the following code into your HTML page:</p>
+
+<pre><code class="language-HTML">&lt;script&gt;
+  var youTubeDataAPIKey = "paste your API key here";
+  var googleApiReady = false;
+  function initGoogleClientApi() {
+    googleApiReady = true;
+  }
+&lt;/script&gt;
+&lt;script src="http://apis.google.com/js/client.js?onload=initGoogleClientApi"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>Starting with version 3.2.13, Able Player no longer requires a YouTube Data API key in order to access caption tracks from YouTube. However, an API key is still encouraged, as it relies on well-documented methods from Google, 
+whereas operating without an API key relies on methods that are not well documented, and therefore 
+may not be reliable.</p>
+
+<p>Also new in 3.2.13, Able Player now handles YouTube captions in the same way it handles HTML <code class="language-plaintext highlighter-rouge">&lt;track kind="captions"&gt;</code> elements. The display of the caption text can be customized via the Preferences menu, and the caption text is used to automatically create an interactive transcript.</p>
+
+<p>YouTube does not currently support chapters, descriptions, and metadata tracks. With Able Player, these features can be added to the video using HTML <code class="language-plaintext highlighter-rouge">&lt;track&gt;</code> elements, even if the video’s captions and subtitles are stored on YouTube. The advantage of managing captions entirely on YouTube is that you only have to manage them in one place, and they’re available everywhere your YouTube video is played.</p>
+
+<p>If your video has HTML <code class="language-plaintext highlighter-rouge">&lt;track&gt;</code> elements for captions and subtitles, these will be used <em>instead of</em> the captions on YouTube.</p>
+
+<p>Adjustable playback rate is available for some videos.</p>
 
 </body>
 </html>
